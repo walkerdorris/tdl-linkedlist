@@ -34,12 +34,24 @@ namespace SinglyLinkedLists
 
         public void AddFirst(string value)
         {
-            throw new NotImplementedException();
+            var node = firstNode;
+            node = new SinglyLinkedListNode(value);
         }
 
         public void AddLast(string value)
         {
-            this.AddLast(value);
+            var node = firstNode;
+            if(node == null)
+            {
+                firstNode = new SinglyLinkedListNode(value);
+            }
+            else while(node.Next != null)
+            {
+                node = node.Next;
+                node.Next = new SinglyLinkedListNode(value);
+            }
+            
+
         }
 
         // NOTE: There is more than one way to accomplish this.  One is O(n).  The other is O(1).
