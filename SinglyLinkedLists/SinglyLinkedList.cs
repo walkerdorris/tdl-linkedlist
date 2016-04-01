@@ -62,7 +62,30 @@ namespace SinglyLinkedLists
 
         public string ElementAt(int index)
         {
-            throw new NotImplementedException();
+            var list = new SinglyLinkedList();
+            int posindex = Math.Abs(index);
+            var counter = 0;
+            var node = firstNode;
+            if (posindex == 0)
+            {
+                if(firstNode == null)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+                else
+                {
+                    return node.ToString();
+                }
+            }
+            else
+            {
+                while (posindex != counter)
+                {
+                    counter++;
+                    node = node.Next;
+                }
+                return node.ToString();
+            }
         }
 
         public string First()
@@ -90,9 +113,21 @@ namespace SinglyLinkedLists
         // HINT 1: You can extract this functionality (finding the last item in the list) from a method you've already written!
         // HINT 2: I suggest writing a private helper method LastNode()
         // HINT 3: If you highlight code and right click, you can use the refactor menu to extract a method for you...
+        private string LastNode()
+        {
+            if (firstNode != null)
+            {
+                return firstNode.ToString();
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public string Last()
         {
-            throw new NotImplementedException();
+            return this.LastNode();
         }
 
         public void Remove(string value)
