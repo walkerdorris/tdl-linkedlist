@@ -41,17 +41,17 @@ namespace SinglyLinkedLists
         public void AddLast(string value)
         {
             var node = firstNode;
-            if(node == null)
+            if (node == null)
             {
                 firstNode = new SinglyLinkedListNode(value);
             }
-            else while(node.Next != null)
-            {
-                node = node.Next;
+            else {
+                while (node.Next != null)
+                {
+                    node = node.Next;
+                }
                 node.Next = new SinglyLinkedListNode(value);
             }
-            
-
         }
 
         // NOTE: There is more than one way to accomplish this.  One is O(n).  The other is O(1).
@@ -65,10 +65,11 @@ namespace SinglyLinkedLists
             var list = new SinglyLinkedList();
             int posindex = Math.Abs(index);
             var counter = 0;
-            var node = firstNode;
+            var node = this.firstNode;
+            
             if (posindex == 0)
             {
-                if(firstNode == null)
+                if(this.firstNode == null)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
@@ -115,9 +116,21 @@ namespace SinglyLinkedLists
         // HINT 3: If you highlight code and right click, you can use the refactor menu to extract a method for you...
         private string LastNode()
         {
-            if (firstNode != null)
+            var node = firstNode;
+            if (node != null)
             {
-                return firstNode.ToString();
+                if(node.Next == null)
+                {
+                    return node.ToString();
+                }
+                else
+                {
+                    while (node.Next != null)
+                    {
+                        node = node.Next;
+                    }
+                    return node.ToString();
+                }
             }
             else
             {
@@ -143,6 +156,19 @@ namespace SinglyLinkedLists
         public string[] ToArray()
         {
             throw new NotImplementedException();
+        }
+
+        public override string ToString()
+        {
+            if (firstNode == null)
+            {
+                return "{ }";
+            }
+            else
+            {
+                return firstNode.ToString();
+            }    
+            
         }
     }
 }
