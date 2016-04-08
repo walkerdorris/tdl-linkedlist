@@ -155,18 +155,65 @@ namespace SinglyLinkedLists
 
         public string[] ToArray()
         {
-            throw new NotImplementedException();
+            var node = firstNode;
+            List<string> listarray = new List<string>();
+            if (node == null)
+            {
+                return new string[] { };
+            }
+            if (node != null && node.Next == null)
+            {
+                var _node = node.ToString();
+                listarray.Add(_node);
+                return listarray.ToArray();
+            }
+            if (node.Next != null)
+            {
+                var _node = node.ToString();
+                listarray.Add(_node);
+                while (node.Next != null)
+                {
+                    node = node.Next;
+                    var _nextnode = node.ToString();
+                    listarray.Add(_nextnode);
+                }
+                return listarray.ToArray();
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public override string ToString()
         {
-            if (firstNode == null)
+            var _stringbuilder = new StringBuilder();
+            var node = firstNode;
+
+            if (node == null)
             {
                 return "{ }";
             }
+            if (node != null && node.Next == null)
+            {
+                return _stringbuilder.Append("{").Append(" ").Append("\"").Append(node.Value).Append("\"").Append(" ").Append("}").ToString();
+            }
+            if (node.Next != null)
+            {
+                _stringbuilder.Append("{").Append(" ").Append("\"").Append(node.Value).Append("\"");
+                var counter = 0;
+                while(node.Next != null)
+                {
+                    counter++;
+                    node = node.Next;
+                    _stringbuilder.Append(", \"" + node.Value + "\"");
+                }
+                _stringbuilder.Append(" }");
+                return _stringbuilder.ToString();
+            }
             else
             {
-                return firstNode.ToString();
+                return node.ToString();
             }    
             
         }
