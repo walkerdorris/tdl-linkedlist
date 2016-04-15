@@ -17,25 +17,122 @@ namespace SinglyLinkedLists
         // READ: http://msdn.microsoft.com/en-us/library/aa691335(v=vs.71).aspx
         public SinglyLinkedList(params object[] values)
         {
-            throw new NotImplementedException();
+            foreach (var item in values)
+            {
+                var node = new SinglyLinkedListNode(item.ToString());
+                if(firstNode == null)
+                {
+                    firstNode = node;
+                }
+                else
+                {
+                    this.AddLast(node.ToString());
+                }
+            }
         }
 
         // READ: http://msdn.microsoft.com/en-us/library/6x16t2tx.aspx
         public string this[int i]
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get { return this.ElementAt(i); }
+            set {
+                SinglyLinkedListNode newNode = new SinglyLinkedListNode(value);
+                if(i == 0)
+                {
+                    newNode.Next = firstNode.Next;
+                    firstNode = newNode;
+                }
+                else
+                {
+                    var counter = 1;
+                    SinglyLinkedListNode node = firstNode;
+                    while(i > counter)
+                    {
+                        node = node.Next;
+                        counter++; 
+                    }
+                    node.Next = newNode;
+                }
+            }
         }
 
         public void AddAfter(string existingValue, string value)
         {
-            throw new NotImplementedException();
+            if (firstNode == null)
+            {
+                throw new ArgumentException();
+            }
+            if (firstNode != null && firstNode.Next == null)
+            {
+                if (firstNode.Value == existingValue)
+                {
+                    firstNode.Next = new SinglyLinkedListNode(value);
+                }
+                else
+                {
+                    throw new ArgumentException();
+                }
+            }
+            if (firstNode.Value == existingValue)
+            {
+                var oldnextnode = firstNode.Next;
+                firstNode.Next = new SinglyLinkedListNode(value);
+                firstNode.Next.Next = oldnextnode;
+            }
+            else
+            {
+                while (firstNode != null && firstNode.Next != null)
+                {
+                    var nextnode = firstNode.Next;
+                    while (nextnode != null && nextnode.Value != existingValue)
+                    {
+                        if (nextnode.Next == null)
+                        {
+                            throw new ArgumentException();
+                        }
+                        while (nextnode.Next != null)
+                        {
+                            if (nextnode.Value == existingValue)
+                            {
+                                nextnode.Next = new SinglyLinkedListNode(value);
+                            }
+                            else
+                            {
+                                nextnode = nextnode.Next;
+                            }
+                        }
+
+                    }
+                    if (firstNode.Value == existingValue)
+                    {
+                        firstNode.Next = new SinglyLinkedListNode(value);
+                    }
+                    if (nextnode.Value == existingValue)
+                    {
+                        nextnode.Next = new SinglyLinkedListNode(value);
+                        break;
+                    }
+                    else
+                    {
+                        throw new ArgumentException();
+                    }
+                }
+            }
         }
 
         public void AddFirst(string value)
         {
-            var node = firstNode;
-            node = new SinglyLinkedListNode(value);
+            
+            if (firstNode == null)
+            {
+                firstNode = new SinglyLinkedListNode(value);
+            }
+            else
+            {
+                var oldfirstnode = firstNode;
+                firstNode = new SinglyLinkedListNode(value);
+                firstNode.Next = oldfirstnode;
+            }   
         }
 
         public void AddLast(string value)
@@ -103,7 +200,27 @@ namespace SinglyLinkedLists
 
         public int IndexOf(string value)
         {
-            throw new NotImplementedException();
+            SinglyLinkedListNode newNode = new SinglyLinkedListNode(value);
+            if(firstNode == null)
+            {
+                return -1;
+            }
+            else
+            {
+                SinglyLinkedListNode flexiNode = firstNode;
+                var counter = 0;
+                while(flexiNode.Value != value)
+                {
+                    flexiNode = flexiNode.Next;
+                    counter++;
+                    if (flexiNode == null)
+                    {
+                        return -1;
+                        break;
+                    }
+                }
+                return counter;
+            }
         }
 
         public bool IsSorted()
@@ -145,7 +262,11 @@ namespace SinglyLinkedLists
 
         public void Remove(string value)
         {
-            throw new NotImplementedException();
+            SinglyLinkedListNode flexiNode = firstNode;
+            if (flexiNode.Value == value)
+            {
+                flexiNode = flexiNode.Next;
+            }
         }
 
         public void Sort()
@@ -155,7 +276,7 @@ namespace SinglyLinkedLists
 
         public string[] ToArray()
         {
-            var node = firstNode;
+            var node = this.firstNode;
             List<string> listarray = new List<string>();
             if (node == null)
             {
