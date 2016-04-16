@@ -243,7 +243,14 @@ namespace SinglyLinkedLists
 
         public bool IsSorted()
         {
-            throw new NotImplementedException();
+            if (firstNode == null || (firstNode != null && firstNode.Next == null))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         // HINT 1: You can extract this functionality (finding the last item in the list) from a method you've already written!
