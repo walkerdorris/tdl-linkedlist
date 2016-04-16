@@ -154,7 +154,25 @@ namespace SinglyLinkedLists
         // NOTE: There is more than one way to accomplish this.  One is O(n).  The other is O(1).
         public int Count()
         {
-            throw new NotImplementedException();
+            var counter = 0;
+            if(firstNode == null)
+            {
+                return counter;
+            }
+            if (firstNode != null && firstNode.Next == null)
+            {
+                return 1;
+            }
+            else
+            {
+                counter = 1;
+                while (firstNode.Next != null)
+                {
+                    firstNode = firstNode.Next;
+                    counter++;
+                }
+                return counter;
+            }
         }
 
         public string ElementAt(int index)
@@ -263,9 +281,23 @@ namespace SinglyLinkedLists
         public void Remove(string value)
         {
             SinglyLinkedListNode flexiNode = firstNode;
-            if (flexiNode.Value == value)
+            if (firstNode.Value == value)
             {
-                flexiNode = flexiNode.Next;
+                firstNode = firstNode.Next;
+            }
+            else
+            {
+                while (flexiNode.Next.Value != value)
+                {
+                    flexiNode = flexiNode.Next;
+                    if (flexiNode.Next == null)
+                    {
+                        flexiNode = firstNode;
+                        flexiNode.Next = firstNode.Next;
+                        return;
+                    }
+                }
+                flexiNode.Next = flexiNode.Next.Next;
             }
         }
 
